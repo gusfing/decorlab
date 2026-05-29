@@ -33,6 +33,26 @@ const FooterBanner = ({ isPreloaded = true }) => {
             }
         );
 
+        const bannerTexts = fbConRef.current.querySelectorAll("p, h2, a");
+        if (bannerTexts.length > 0) {
+            gsap.fromTo(bannerTexts,
+                { y: 30, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: fbConRef.current,
+                        start: "top 85%",
+                        end: "bottom 15%",
+                        toggleActions: "play reverse play reverse",
+                    }
+                }
+            );
+        }
+
     }, { scope: fbConRef, dependencies: [isPreloaded] });
 
     return (

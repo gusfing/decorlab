@@ -668,6 +668,26 @@ export default function Home() {
         );
       }
 
+      const aboutStats = document.querySelectorAll(".about-stat-item");
+      if (aboutStats.length > 0) {
+        gsap.fromTo(aboutStats,
+          { y: 25, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#info",
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
       // Stat Numbers Count-Up Animation
       const stats = gsap.utils.toArray<HTMLElement>(".about-stat-num");
       if (stats.length > 0) {
@@ -995,6 +1015,48 @@ export default function Home() {
           }
         );
       }
+
+      // Testimonials (#feedback)
+      const feedbackElms = document.querySelectorAll("#feedback p, #feedback h1, #feedback img, #feedback button, #feedback .progress-line");
+      if (feedbackElms.length > 0) {
+        gsap.fromTo(feedbackElms,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#feedback",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // Detailed Footer (#contact-footer)
+      const footerElms = document.querySelectorAll("#contact-footer .footer-brand, #contact-footer h4, #contact-footer li, #contact-footer .footer-bottom > *");
+      if (footerElms.length > 0) {
+        gsap.fromTo(footerElms,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#contact-footer",
+              start: "top 95%",
+              end: "bottom bottom",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
     });
 
     mm.add("(max-width: 900px)", () => {
@@ -1013,14 +1075,16 @@ export default function Home() {
 
       // Mobile-optimized animations (no reverse to prevent layout jumps/lag)
       const mobileTriggers = [
-        { trigger: "#info", targets: ".about-title-wrapper, .about-right-headline, .about-right-body, .about-left-image img, .about-right-image img" },
+        { trigger: "#info", targets: ".about-title-wrapper, .about-right-headline, .about-right-body, .about-left-image img, .about-right-image img, .about-stat-item" },
         { trigger: "#process", targets: "#process .serif-headline, #process .step-card-new" },
         { trigger: "#collection", targets: "#collection .gallery-text-col > *, #collection .reveal-gallery-img" },
         { trigger: ".cashmere-bg", targets: ".cashmere-bg .collab-left > *, .cashmere-bg .collab-right .gallery-image-wrapper" },
         { trigger: ".press-grid", targets: ".press-grid .press-left, .press-grid .press-right > *" },
         { trigger: "#showcase", targets: "#showcase .showcase-header > *, #showcase .showcase-tabs, #showcase .showcase-content-grid" },
         { trigger: ".section-capabilities", targets: ".section-capabilities .capabilities-header > *, .section-capabilities .cap-card" },
-        { trigger: "#instagram", targets: "#instagram .instagram-header > *, #instagram .instagram-card" }
+        { trigger: "#instagram", targets: "#instagram .instagram-header > *, #instagram .instagram-card" },
+        { trigger: "#feedback", targets: "#feedback p, #feedback h1, #feedback img, #feedback button, #feedback .progress-line" },
+        { trigger: "#contact-footer", targets: "#contact-footer .footer-brand, #contact-footer h4, #contact-footer li, #contact-footer .footer-bottom > *" }
       ];
 
       mobileTriggers.forEach((item) => {
