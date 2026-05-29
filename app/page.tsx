@@ -556,6 +556,445 @@ export default function Home() {
           0
         );
       }
+
+      // 1. Hero scroll animations (parallax & fade out)
+      if (document.querySelector(".hero-brand-title")) {
+        gsap.to(".hero-brand-title", {
+          yPercent: -60,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-section",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+      }
+
+      if (document.querySelector(".scroll-indicator")) {
+        gsap.to(".scroll-indicator", {
+          opacity: 0,
+          y: 20,
+          scrollTrigger: {
+            trigger: ".hero-section",
+            start: "10% top",
+            end: "40% top",
+            scrub: true,
+          }
+        });
+      }
+
+      if (document.querySelector(".hero-cards-container")) {
+        gsap.to(".hero-cards-container", {
+          y: 120,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-section",
+            start: "top top",
+            end: "80% top",
+            scrub: true,
+          }
+        });
+      }
+
+      if (document.querySelector(".slideshow-container")) {
+        gsap.to(".slideshow-container", {
+          yPercent: 15,
+          scale: 1.05,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero-section",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+      }
+
+      // 2. About Us Section (#info)
+      if (document.querySelector(".about-left-image img")) {
+        gsap.fromTo(".about-left-image img",
+          { scale: 1.15, opacity: 0.8 },
+          {
+            scale: 1.0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: "#info",
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      if (document.querySelector(".about-right-image img")) {
+        gsap.fromTo(".about-right-image img",
+          { scale: 1.12, opacity: 0.8 },
+          {
+            scale: 1.0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".about-right-image",
+              start: "top 90%",
+              end: "bottom 10%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      const aboutTexts = document.querySelectorAll(".about-title-wrapper, .about-right-headline, .about-right-body");
+      if (aboutTexts.length > 0) {
+        gsap.fromTo(aboutTexts,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#info",
+              start: "top 80%",
+              end: "bottom 20%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // Stat Numbers Count-Up Animation
+      const stats = gsap.utils.toArray<HTMLElement>(".about-stat-num");
+      if (stats.length > 0) {
+        stats.forEach((stat) => {
+          const targetVal = parseFloat(stat.getAttribute("data-target") || "0");
+          const suffix = stat.getAttribute("data-suffix") || "";
+          const decimals = parseInt(stat.getAttribute("data-decimals") || "0", 10);
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: targetVal,
+            duration: 1.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: stat,
+              start: "top 90%",
+              toggleActions: "play none none none"
+            },
+            onUpdate: () => {
+              stat.innerText = obj.val.toFixed(decimals) + suffix;
+            }
+          });
+        });
+      }
+
+      // 3. Process Section (#process)
+      if (document.querySelector("#process .serif-headline")) {
+        gsap.fromTo("#process .serif-headline",
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#process",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      if (document.querySelector("#process .step-card-new")) {
+        gsap.fromTo("#process .step-card-new",
+          { y: 55, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#process .editorial-steps-grid",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // 4. Curated Spaces Section (#collection)
+      if (document.querySelector("#collection .gallery-text-col > *")) {
+        gsap.fromTo("#collection .gallery-text-col > *",
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#collection",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      const collectionImgs = gsap.utils.toArray<HTMLElement>("#collection .reveal-gallery-img");
+      if (collectionImgs.length > 0) {
+        collectionImgs.forEach((img) => {
+          gsap.fromTo(img,
+            { y: 40, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 1.0,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: img,
+                start: "top 90%",
+                end: "bottom 10%",
+                toggleActions: "play reverse play reverse",
+              }
+            }
+          );
+        });
+
+        // Parallax scroll on images
+        collectionImgs.forEach((img) => {
+          const innerImg = img.querySelector("img");
+          if (innerImg) {
+            gsap.fromTo(innerImg,
+              { yPercent: -8 },
+              {
+                yPercent: 8,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: img,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                }
+              }
+            );
+          }
+        });
+      }
+
+      // 5. Recent Collabs Section (.cashmere-bg)
+      const collabLeftTexts = document.querySelectorAll(".cashmere-bg .collab-left > *");
+      if (collabLeftTexts.length > 0) {
+        gsap.fromTo(collabLeftTexts,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".cashmere-bg",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      const collabRightImgs = document.querySelectorAll(".cashmere-bg .collab-right .gallery-image-wrapper, .cashmere-bg .collab-right .collab-images-row > *");
+      if (collabRightImgs.length > 0) {
+        gsap.fromTo(collabRightImgs,
+          { y: 40, opacity: 0, scale: 0.98 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".cashmere-bg .collab-right",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // 6. Press & Publication Section
+      const pressLeftImg = document.querySelector(".press-grid .press-left");
+      if (pressLeftImg) {
+        gsap.fromTo(pressLeftImg,
+          { y: 40, opacity: 0, scale: 0.97 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 1.0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".press-grid",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      const pressRightTexts = document.querySelectorAll(".press-grid .press-right > *");
+      if (pressRightTexts.length > 0) {
+        gsap.fromTo(pressRightTexts,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".press-grid",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // 7. Projects Showcase Section (#showcase)
+      const showcaseHeaders = document.querySelectorAll("#showcase .showcase-header > *, #showcase .showcase-tabs");
+      if (showcaseHeaders.length > 0) {
+        gsap.fromTo(showcaseHeaders,
+          { y: 25, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#showcase",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      if (document.querySelector("#showcase .showcase-content-grid")) {
+        gsap.fromTo("#showcase .showcase-content-grid",
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#showcase .showcase-tabs",
+              start: "bottom 90%",
+              end: "bottom 10%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // 8. Capabilities Section (.section-capabilities)
+      const capHeaders = document.querySelectorAll(".section-capabilities .capabilities-header > *");
+      if (capHeaders.length > 0) {
+        gsap.fromTo(capHeaders,
+          { y: 25, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".section-capabilities",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      const capCards = document.querySelectorAll(".section-capabilities .cap-card");
+      if (capCards.length > 0) {
+        gsap.fromTo(capCards,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ".section-capabilities .capabilities-grid",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      // 9. Instagram Section (#instagram)
+      const instaHeaders = document.querySelectorAll("#instagram .instagram-header > *");
+      if (instaHeaders.length > 0) {
+        gsap.fromTo(instaHeaders,
+          { y: 25, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#instagram",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
+
+      const instaCards = document.querySelectorAll("#instagram .instagram-card");
+      if (instaCards.length > 0) {
+        gsap.fromTo(instaCards,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.06,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#instagram .instagram-grid",
+              start: "top 85%",
+              end: "bottom 15%",
+              toggleActions: "play reverse play reverse",
+            }
+          }
+        );
+      }
     });
 
     mm.add("(max-width: 900px)", () => {
@@ -571,104 +1010,61 @@ export default function Home() {
         });
       }
       gsap.set(scrollTrack, { x: 0 });
-    });
 
-    mm.add("(min-width: 0px)", () => {
-      // Process section scroll-triggered stagger reveal
-      if (document.querySelector("#process .serif-headline")) {
-        gsap.fromTo(
-          "#process .serif-headline",
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.2,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: "#process",
-              start: "top 80%",
-            },
-          }
-        );
-      }
+      // Mobile-optimized animations (no reverse to prevent layout jumps/lag)
+      const mobileTriggers = [
+        { trigger: "#info", targets: ".about-title-wrapper, .about-right-headline, .about-right-body, .about-left-image img, .about-right-image img" },
+        { trigger: "#process", targets: "#process .serif-headline, #process .step-card-new" },
+        { trigger: "#collection", targets: "#collection .gallery-text-col > *, #collection .reveal-gallery-img" },
+        { trigger: ".cashmere-bg", targets: ".cashmere-bg .collab-left > *, .cashmere-bg .collab-right .gallery-image-wrapper" },
+        { trigger: ".press-grid", targets: ".press-grid .press-left, .press-grid .press-right > *" },
+        { trigger: "#showcase", targets: "#showcase .showcase-header > *, #showcase .showcase-tabs, #showcase .showcase-content-grid" },
+        { trigger: ".section-capabilities", targets: ".section-capabilities .capabilities-header > *, .section-capabilities .cap-card" },
+        { trigger: "#instagram", targets: "#instagram .instagram-header > *, #instagram .instagram-card" }
+      ];
 
-      if (document.querySelector("#process .step-card-new")) {
-        gsap.fromTo(
-          "#process .step-card-new",
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.0,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: "#process .editorial-steps-grid",
-              start: "top 85%",
-            },
-          }
-        );
-      }
-
-      // Collection section scroll-triggered stagger reveal
-      if (document.querySelector("#collection .gallery-text-col > *")) {
-        gsap.fromTo(
-          "#collection .gallery-text-col > *",
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.0,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: "#collection",
-              start: "top 80%",
-            },
-          }
-        );
-      }
-
-      // Stagger reveal on the gallery images
-      const collectionImgs = gsap.utils.toArray<HTMLElement>("#collection .reveal-gallery-img");
-      if (collectionImgs.length > 0) {
-        collectionImgs.forEach((img) => {
-          gsap.fromTo(
-            img,
-            { opacity: 0, y: 60, scale: 0.96 },
+      mobileTriggers.forEach((item) => {
+        const elms = document.querySelectorAll(item.targets);
+        if (elms.length > 0) {
+          gsap.fromTo(elms,
+            { y: 25, opacity: 0 },
             {
-              opacity: 1,
               y: 0,
-              scale: 1,
-              duration: 1.2,
-              ease: "power4.out",
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.08,
+              ease: "power3.out",
               scrollTrigger: {
-                trigger: img,
-                start: "top 85%",
-              },
+                trigger: item.trigger,
+                start: "top 90%",
+                once: true
+              }
             }
           );
-        });
+        }
+      });
 
-        // Parallax scroll on images
-        collectionImgs.forEach((img) => {
-          const innerImg = img.querySelector("img");
-          if (innerImg) {
-            gsap.fromTo(
-              innerImg,
-              { yPercent: -8 },
-              {
-                yPercent: 8,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: img,
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: true,
-                },
-              }
-            );
-          }
+      // Stats Count-Up for mobile
+      const statsMob = gsap.utils.toArray<HTMLElement>(".about-stat-num");
+      if (statsMob.length > 0) {
+        statsMob.forEach((stat) => {
+          const targetVal = parseFloat(stat.getAttribute("data-target") || "0");
+          const suffix = stat.getAttribute("data-suffix") || "";
+          const decimals = parseInt(stat.getAttribute("data-decimals") || "0", 10);
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: targetVal,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: stat,
+              start: "top 95%",
+              once: true
+            },
+            onUpdate: () => {
+              stat.innerText = obj.val.toFixed(decimals) + suffix;
+            }
+          });
         });
       }
     });
@@ -986,19 +1382,19 @@ export default function Home() {
               {/* Statistics Grid */}
               <div className="about-stats-grid">
                 <div className="about-stat-item">
-                  <span className="about-stat-num">32+</span>
+                  <span className="about-stat-num" data-target="32" data-suffix="+">0+</span>
                   <span className="about-stat-label">Years Legacy</span>
                 </div>
                 <div className="about-stat-item">
-                  <span className="about-stat-num">1.3k+</span>
+                  <span className="about-stat-num" data-target="1.3" data-suffix="k+" data-decimals="1">0.0k+</span>
                   <span className="about-stat-label">Sites Completed</span>
                 </div>
                 <div className="about-stat-item">
-                  <span className="about-stat-num">15+</span>
+                  <span className="about-stat-num" data-target="15" data-suffix="+">0+</span>
                   <span className="about-stat-label">Awards Won</span>
                 </div>
                 <div className="about-stat-item">
-                  <span className="about-stat-num">275+</span>
+                  <span className="about-stat-num" data-target="275" data-suffix="+">0+</span>
                   <span className="about-stat-label">Professionals</span>
                 </div>
               </div>
